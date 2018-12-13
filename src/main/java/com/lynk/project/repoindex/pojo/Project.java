@@ -20,7 +20,7 @@ public class Project {
     @JsonProperty
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch=FetchType.EAGER)
     @JoinColumn(name="repository_id")
     public Repository getRepository() {
         return repository;

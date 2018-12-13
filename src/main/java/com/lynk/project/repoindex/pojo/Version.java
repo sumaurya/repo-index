@@ -21,7 +21,10 @@ public class Version {
     private String liscence;
 
     @JsonProperty
-    private String dependency_json;
+    private String dependsOn;
+
+    @JsonProperty
+    private String url;
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -62,12 +65,21 @@ public class Version {
         this.liscence = liscence;
     }
 
-    @Column(name = "dependency_json")
-    public String getDependency_json() {
-        return dependency_json;
+    @Column(name = "dependsOn")
+    public String getDependsOn() {
+        return dependsOn;
     }
 
-    public void setDependency_json(String dependency_json) {
-        this.dependency_json = dependency_json;
+    public void setDependsOn(String dependencyJson) {
+        this.dependsOn = dependencyJson;
+    }
+
+    @Column(name = "url")
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

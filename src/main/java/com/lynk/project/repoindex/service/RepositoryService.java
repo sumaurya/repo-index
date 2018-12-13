@@ -22,7 +22,7 @@ public class RepositoryService {
         try {
             List<Repository> repositories = new ArrayList<>();
             repoRepository.findAll().forEach(repositories::add);
-            availableRepositoriesResponse.setRepoRepositories(repositories);
+            availableRepositoriesResponse.setRepositories(repositories);
             availableRepositoriesResponse.setStatus("Success");
         } catch (Exception e) {
             availableRepositoriesResponse.setStatus("Failure");

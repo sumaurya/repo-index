@@ -13,4 +13,7 @@ public interface VersionRepository extends CrudRepository<Version, Integer> {
     @Query(value = "select * from version where project_id=:projectID", nativeQuery = true)
     public List<Version> findByProjectId(@Param("projectID") int repositoryID);
 
+    @Query(value = "select url from version", nativeQuery = true)
+    public List<String> findAllUrl();
+
 }

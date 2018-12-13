@@ -8,13 +8,13 @@ import java.util.List;
 public class AvailableRepositoriesResponse extends AbstractResponse{
 
     @JsonProperty
-    private List<Repository> repoRepositories;
+    private List<Repository> repositories;
 
-    public List<Repository> getRepoRepositories() {
-        return repoRepositories;
+    public List<Repository> getRepositories() {
+        return repositories;
     }
 
-    public void setRepoRepositories(List<Repository> repoRepositories) {
-        this.repoRepositories = repoRepositories;
+    public void setRepositories(List<Repository> repositories) {
+        this.repositories = repositories;
     }
 }

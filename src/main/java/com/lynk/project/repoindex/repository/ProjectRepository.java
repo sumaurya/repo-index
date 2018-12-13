@@ -11,4 +11,6 @@ public interface ProjectRepository extends CrudRepository<Project, Integer> {
 
     @Query(value = "select * from project where repository_id=:repositoryID", nativeQuery = true)
     public List<Project> findByRepositoryId(@Param("repositoryID") int repositoryID);
+
+    public List<Project> findByTitleContaining(@Param("title") String title);
 }
