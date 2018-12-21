@@ -65,7 +65,7 @@ public class Version {
         this.liscence = liscence;
     }
 
-    @Column(name = "dependsOn")
+    @Column(name = "depends_on")
     public String getDependsOn() {
         return dependsOn;
     }

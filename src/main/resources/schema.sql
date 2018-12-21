@@ -22,7 +22,7 @@ CREATE TABLE `version` (
   `version` varchar(32) NOT NULL,
   `liscence` varchar(100) DEFAULT NULL,
   `url` varchar(100) DEFAULT NULL,
-  `dependsOn` varchar(1000) DEFAULT NULL,
+  `depends_on` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`version_id`),
   unique(url),
   CONSTRAINT `version_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`)
