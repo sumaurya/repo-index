@@ -1,18 +1,14 @@
-package com.lynk.project.repoindex.pojo;
+package com.lynk.project.repoindex.response.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name="project")
-public class Project {
+public class ResponseProject {
 
     @JsonProperty
     private Integer id;
 
     @JsonProperty
-    private Repository repository;
+    private int repositoryId;
 
     @JsonProperty
     private String title;
@@ -20,19 +16,13 @@ public class Project {
     @JsonProperty
     private String description;
 
-    @ManyToOne(cascade = CascadeType.DETACH,fetch=FetchType.LAZY)
-    @JoinColumn(name="repository_id")
-    public Repository getRepository() {
-        return repository;
+    public ResponseProject(Integer id, int repositoryId, String title, String description) {
+        this.id = id;
+        this.repositoryId = repositoryId;
+        this.title = title;
+        this.description = description;
     }
 
-    public void setRepository(Repository repository) {
-        this.repository = repository;
-    }
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "project_id")
     public Integer getId() {
         return id;
     }
@@ -41,7 +31,14 @@ public class Project {
         this.id = id;
     }
 
-    @Column(name = "title")
+    public int getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(int repositoryId) {
+        this.repositoryId = repositoryId;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -50,7 +47,6 @@ public class Project {
         this.title = title;
     }
 
-    @Column(name = "description")
     public String getDescription() {
         return description;
     }

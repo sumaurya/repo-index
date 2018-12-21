@@ -5,8 +5,6 @@ import com.lynk.project.repoindex.pojo.Project;
 import com.lynk.project.repoindex.pojo.Repository;
 import com.lynk.project.repoindex.pojo.Version;
 import com.lynk.project.repoindex.repository.AuthorRepository;
-import com.lynk.project.repoindex.repository.ProjectRepository;
-import com.lynk.project.repoindex.repository.VersionRepository;
 import org.codehaus.plexus.archiver.tar.TarGZipUnArchiver;
 import org.codehaus.plexus.logging.console.ConsoleLoggerManager;
 import org.codehaus.plexus.util.FileUtils;

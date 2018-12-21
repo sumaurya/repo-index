@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class FetchPackageDetailsRequest {
 
     @JsonProperty
-    private int repositoryId;
+    private String id;
 
-    public int getRepositoryId() {
-        return repositoryId;
+    public String getId() {
+        return id;
     }
 
-    public void setRepositoryId(int repositoryId) {
-        this.repositoryId = repositoryId;
+    public void setId(String id) {
+        this.id = id;
     }
 }

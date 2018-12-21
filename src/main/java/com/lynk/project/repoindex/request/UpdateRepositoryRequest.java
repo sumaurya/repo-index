@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UpdateRepositoryRequest {
 
     @JsonProperty
-    private int repositoryId;
+    private int id;
 
-    public int getRepositoryId() {
-        return repositoryId;
+    public int getId() {
+        return id;
     }
 
-    public void setRepositoryId(int repositoryId) {
-        this.repositoryId = repositoryId;
+    public void setId(int id) {
+        this.id = id;
     }
 }

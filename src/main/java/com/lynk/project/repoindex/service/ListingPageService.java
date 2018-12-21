@@ -8,14 +8,17 @@ import com.lynk.project.repoindex.repository.AuthorRepository;
 import com.lynk.project.repoindex.repository.ProjectRepository;
 import com.lynk.project.repoindex.repository.RepoRepository;
 import com.lynk.project.repoindex.repository.VersionRepository;
-import com.lynk.project.repoindex.request.FetchPackageDetailsRequest;
-import com.lynk.project.repoindex.response.FetchPackageDetailsResponse;
+import com.lynk.project.repoindex.response.FetchAuthorForVersionResponse;
+import com.lynk.project.repoindex.response.FetchPackageForRepositoryResponse;
+import com.lynk.project.repoindex.response.FetchVersionsForPackageResponse;
+import com.lynk.project.repoindex.response.pojo.ResponseAuthor;
+import com.lynk.project.repoindex.response.pojo.ResponseProject;
+import com.lynk.project.repoindex.response.pojo.ResponseVersion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ListingPageService {
@@ -32,34 +35,72 @@ public class ListingPageService {
     @Autowired
     private AuthorRepository authorRepository;
 
-    public FetchPackageDetailsResponse handleFetchPackageDetails(FetchPackageDetailsRequest request) {
-        FetchPackageDetailsResponse fetchPackageDetailsResponse = new FetchPackageDetailsResponse();
+    public FetchPackageForRepositoryResponse handleFetchPackageForRepository(String repoId) {
+        FetchPackageForRepositoryResponse fetchPackageForRepositoryResponse = new FetchPackageForRepositoryResponse();
         try {
-            Repository repository = repoRepository.findById(request.getRepositoryId()).orElse(null);
+            Repository repository = repoRepository.findById(Integer.parseInt(repoId)).orElse(null);
             if(repository == null)
                 throw new Exception("invalid repo id...");
 
-            fetchPackageDetailsResponse.setRepository(repository);
-
-            Map<Project, Map<Version, List<Author>>> responseMap = new HashMap<>();
             List<Project> projects = projectRepository.findByRepositoryId(repository.getId());
-
+            List<ResponseProject> projectList = new ArrayList<>();
             for(Project project : projects) {
-                Map<Version, List<Author>> versionAuthorMap = new HashMap<>();
-
-                List<Version> versions = versionRepository.findByProjectId(project.getId());
-                for(Version version : versions) {
-                    List<Author> authors = authorRepository.findByVersionId(version.getId());
-                    versionAuthorMap.put(version, authors);
-                }
-
-                responseMap.put(project, versionAuthorMap);
+                ResponseProject responseProject = new ResponseProject(project.getId(), project.getRepository().getId(),
+                        project.getDescription(), project.getTitle());
+                projectList.add(responseProject);
             }
-            fetchPackageDetailsResponse.setResponse(responseMap);
-            fetchPackageDetailsResponse.setStatus("Success");
+
+            fetchPackageForRepositoryResponse.setProjects(projectList);
+            fetchPackageForRepositoryResponse.setStatus("Success");
         } catch (Exception e) {
-            fetchPackageDetailsResponse.setStatus("Failure");
+            fetchPackageForRepositoryResponse.setStatus("Failure");
         }
-        return fetchPackageDetailsResponse;
+        return fetchPackageForRepositoryResponse;
+    }
+
+    public FetchAuthorForVersionResponse handleFetchAuthorForVersion(String versionId) {
+        FetchAuthorForVersionResponse fetchAuthorForVersionResponse = new FetchAuthorForVersionResponse();
+        try {
+            Version version = versionRepository.findById(Integer.parseInt(versionId)).orElse(null);
+            if(version == null)
+                throw new Exception("invalid repo id...");
+
+            List<Author> authors = authorRepository.findByVersionId(version.getId());
+            List<ResponseAuthor> authorList = new ArrayList<>();
+            for(Author author : authors) {
+                ResponseAuthor responseAuthor = new ResponseAuthor(author.getId(), author.getVersion().getId(),
+                        author.getName(), author.getEmail());
+                authorList.add(responseAuthor);
+            }
+
+            fetchAuthorForVersionResponse.setAuthors(authorList);
+            fetchAuthorForVersionResponse.setStatus("Success");
+        } catch (Exception e) {
+            fetchAuthorForVersionResponse.setStatus("Failure");
+        }
+        return fetchAuthorForVersionResponse;
+    }
+
+    public FetchVersionsForPackageResponse handleFetchVersionsForPackage(String packageId) {
+        FetchVersionsForPackageResponse fetchVersionsForPackageResponse = new FetchVersionsForPackageResponse();
+        try {
+            Project project = projectRepository.findById(Integer.parseInt(packageId)).orElse(null);
+            if(project == null)
+                throw new Exception("invalid repo id...");
+
+            List<Version> versions = versionRepository.findByProjectId(project.getId());
+            List<ResponseVersion> versionList = new ArrayList<>();
+            for(Version version : versions) {
+                ResponseVersion responseVersion = new ResponseVersion(version.getId(), version.getProject().getId(), version.getVersion(),
+                        version.getLiscence(), version.getDependsOn(), version.getUrl());
+                versionList.add(responseVersion);
+            }
+
+            fetchVersionsForPackageResponse.setVersions(versionList);
+            fetchVersionsForPackageResponse.setStatus("Success");
+        } catch (Exception e) {
+            fetchVersionsForPackageResponse.setStatus("Failure");
+        }
+        return fetchVersionsForPackageResponse;
     }
 }

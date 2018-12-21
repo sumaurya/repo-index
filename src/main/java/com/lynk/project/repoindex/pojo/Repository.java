@@ -18,7 +18,7 @@ public class Repository {
     private String url;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "repository_id")
     public Integer getId() {
         return id;

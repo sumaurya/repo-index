@@ -41,7 +41,7 @@ public class UpdateRepositoryService {
     public UpdateRepositoryResponse handleRequest(UpdateRepositoryRequest request) {
         UpdateRepositoryResponse updateRepositoryResponse = new UpdateRepositoryResponse();
         try {
-            Repository repository = repoRepository.findById(request.getRepositoryId()).orElse(null);
+            Repository repository = repoRepository.findById(request.getId()).orElse(null);
             if(repository == null)
                 throw new Exception("invalid repository id.");
 

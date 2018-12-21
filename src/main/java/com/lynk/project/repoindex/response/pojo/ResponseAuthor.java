@@ -1,18 +1,14 @@
-package com.lynk.project.repoindex.pojo;
+package com.lynk.project.repoindex.response.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name="author")
-public class Author {
+public class ResponseAuthor {
 
     @JsonProperty
     private int id;
 
     @JsonProperty
-    private Version version;
+    private int versionId;
 
     @JsonProperty
     private String name;
@@ -20,9 +16,13 @@ public class Author {
     @JsonProperty
     private String email;
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "author_id")
+    public ResponseAuthor(int id, int versionId, String name, String email) {
+        this.id = id;
+        this.versionId = versionId;
+        this.name = name;
+        this.email = email;
+    }
+
     public int getId() {
         return id;
     }
@@ -31,17 +31,14 @@ public class Author {
         this.id = id;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @JoinColumn(name="version_id")
-    public Version getVersion() {
-        return version;
+    public int getVersionId() {
+        return versionId;
     }
 
-    public void setVersion(Version version) {
-        this.version = version;
+    public void setVersionId(int versionId) {
+        this.versionId = versionId;
     }
 
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -50,7 +47,6 @@ public class Author {
         this.name = name;
     }
 
-    @Column(name = "email")
     public String getEmail() {
         return email;
     }

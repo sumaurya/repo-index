@@ -1,18 +1,14 @@
-package com.lynk.project.repoindex.pojo;
+package com.lynk.project.repoindex.response.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name="version")
-public class Version {
+public class ResponseVersion {
 
     @JsonProperty
     private int id;
 
     @JsonProperty
-    private Project project;
+    private int projectId;
 
     @JsonProperty
     private String version;
@@ -26,9 +22,15 @@ public class Version {
     @JsonProperty
     private String url;
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "version_id")
+    public ResponseVersion(int id, int projectId, String version, String liscence, String dependsOn, String url) {
+        this.id = id;
+        this.projectId = projectId;
+        this.version = version;
+        this.liscence = liscence;
+        this.dependsOn = dependsOn;
+        this.url = url;
+    }
+
     public int getId() {
         return id;
     }
@@ -37,17 +39,14 @@ public class Version {
         this.id = id;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @JoinColumn(name="project_id")
-    public Project getProject() {
-        return project;
+    public int getProjectId() {
+        return projectId;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
-    @Column(name = "version")
     public String getVersion() {
         return version;
     }
@@ -56,7 +55,6 @@ public class Version {
         this.version = version;
     }
 
-    @Column(name = "liscence")
     public String getLiscence() {
         return liscence;
     }
@@ -65,16 +63,14 @@ public class Version {
         this.liscence = liscence;
     }
 
-    @Column(name = "dependsOn")
     public String getDependsOn() {
         return dependsOn;
     }
 
-    public void setDependsOn(String dependencyJson) {
-        this.dependsOn = dependencyJson;
+    public void setDependsOn(String dependsOn) {
+        this.dependsOn = dependsOn;
     }
 
-    @Column(name = "url")
     public String getUrl() {
         return url;
     }
